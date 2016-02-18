@@ -12,7 +12,7 @@ public class NondeterministicFiniteAutomaton extends Automaton {
 
 
     /**
-     * Computation of a non-deterministic finite automaton:
+     * Computation of a non-deterministic finite automatonRepresentation:
      * 1 - Execute that transitions from all the current states, that correspond to the current input character.
      * 2 - Repeat (1) with the next set of current states and the next character, until the input word is finished.
      * 3 - When the input word is finished, create the intersection of the sets of current states and accepting states.
@@ -20,7 +20,7 @@ public class NondeterministicFiniteAutomaton extends Automaton {
      */
     @Override
     public boolean emulate(String inputWord) {
-        Set<State> startStates = getStartStates();
+        Set<State> startStates = evaluateStartStates();
 
         Set<State> endStates = processInputWord(inputWord, startStates);
 
@@ -30,12 +30,19 @@ public class NondeterministicFiniteAutomaton extends Automaton {
     }
 
     /**
-     * Returns a set with the start state and all states that can be reached with an epsilon transition from the start state.
+     * Returns a set with the start state and all states that can be reached with epsilon transitions from the start state.
      */
-    private Set<State> getStartStates() {
+    private Set<State> evaluateStartStates() {
         Set<State> startStates = new HashSet<>();
         startStates.add(startState);
-        startStates.addAll(getAllTargetStates(startStates, EPSILON));
+        int numberOfStates = 0;
+        int newNumberOfStates = 1;
+
+        while (numberOfStates != newNumberOfStates){
+            startStates.addAll(getAllTargetStates(startStates, EPSILON));
+            numberOfStates = newNumberOfStates;
+            newNumberOfStates = startStates.size();
+        }
         return startStates;
     }
 

@@ -1,0 +1,54 @@
+{
+	automaton: [
+		{name: "q1",
+		startstate: true,
+		transitions: [
+			"-, -, $, q2"
+			]
+		},
+		{name: "q2",
+		transitions: [
+			"a, -, a, q2",
+			"-, -, -, q3",
+			"-, -, -, q5"
+			]
+		},
+		{name: "q3",
+		transitions: [
+			"b, a, -, q3",
+			"-, $, -, q4"
+			]
+		},
+		{name: "q4",
+		acceptingstate: true,
+		transitions: [
+			"c, -, -, q4"
+			]
+		},
+		{name: "q5",
+		transitions: [
+			"b, -, -, q5",
+			"-, -, -, q6"
+			]
+		},
+		{name: "q6",
+		transitions: [
+			"c, a, -, q6",
+			"-, $, -, q7"
+			]
+		},
+		{name: "q7",
+		acceptingstate: true,
+		transitions: [
+			]
+		}
+	],
+	inputwords: [
+		"aabb", 
+		"aabbc", 
+		"aabbcc", 
+		"aaaabcccc", 
+		"",
+		"a",
+		"bbcc"]
+}

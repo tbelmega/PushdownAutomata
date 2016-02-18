@@ -18,6 +18,7 @@ public class Transition {
         this.targetState = targetState;
     }
 
+
     public boolean popCharacterIs(Character thatChar) {
         return this.popCharacter == thatChar;
     }

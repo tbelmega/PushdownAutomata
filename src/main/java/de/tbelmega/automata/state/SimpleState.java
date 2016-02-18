@@ -1,6 +1,7 @@
 package de.tbelmega.automata.state;
 
 import de.tbelmega.automata.Transition;
+import de.tbelmega.automata.TransitionRepresentation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,18 @@ public class SimpleState implements State {
         return this.id;
     }
 
+    @Override
+    public boolean hasTransition(TransitionRepresentation rep) {
+        for (Transition t: transitions){
+            if ( rep.read == t.readCharacter &&
+                    rep.pop == t.popCharacter &&
+                    rep.push == t.pushCharacter &&
+                    rep.toState.equals(t.targetState.getStateId())
+                    ) return true;
+        }
+        return false;
+    }
+
     public void addTransition(char inputCharacter, SimpleState targetState) {
         this.addTransition(inputCharacter, '-', '-', targetState);
     }
@@ -31,6 +44,10 @@ public class SimpleState implements State {
 
     public void addTransition(char inputCharacter, char popCharacter, char pushCharacter, SimpleState targetState) {
         this.transitions.add(new Transition(inputCharacter, popCharacter, pushCharacter, targetState));
+    }
+
+    public void addTransition(TransitionRepresentation rep, SimpleState toState) {
+        this.transitions.add(new Transition(rep.read, rep.pop, rep.push, toState));
     }
 
 
@@ -56,6 +73,18 @@ public class SimpleState implements State {
         }
 
         return nextStates;
+    }
+
+    @Override
+    public boolean equals(Object anotherObject){
+        if (anotherObject instanceof  SimpleState){
+            return this.id.equals(((SimpleState) anotherObject).getStateId());
+        } else return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return this.id.hashCode();
     }
 
 }

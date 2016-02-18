@@ -1,6 +1,7 @@
 package de.tbelmega.automata.state;
 
 import de.tbelmega.automata.Transition;
+import de.tbelmega.automata.TransitionRepresentation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +11,8 @@ import static de.tbelmega.automata.Automaton.EPSILON;
 
 /**
  * Created by Thiemo on 16.02.2016.
+ *
+ * StackStatePair uses the decorator pattern to compose a stack to the simple state.
  */
 public class StateStackPair implements State {
     private final Stack<Character> stack;
@@ -23,6 +26,11 @@ public class StateStackPair implements State {
 
     public String getStateId(){
         return this.state.getStateId();
+    }
+
+    @Override
+    public boolean hasTransition(TransitionRepresentation rep) {
+        return state.hasTransition(rep);
     }
 
     public Set<StateStackPair> doTransition(Character inputCharacter) {
@@ -48,5 +56,17 @@ public class StateStackPair implements State {
 
     public char peek() {
         return stack.peek();
+    }
+
+    @Override
+    public boolean equals(Object anotherObject){
+        if (anotherObject instanceof  StateStackPair){
+            return this.state.getStateId().equals(((StateStackPair) anotherObject).getStateId());
+        } else return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return this.state.getStateId().hashCode();
     }
 }

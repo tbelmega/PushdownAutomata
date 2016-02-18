@@ -16,7 +16,7 @@ public class PushdownAutomaton extends NondeterministicFiniteAutomaton {
 
     @Override
     public boolean emulate(String inputWord){
-        Set<State> startStates = getStartStates();
+        Set<State> startStates = evaluateStartStates();
 
         Set<State> endStates = processInputWord(inputWord, startStates);
 
@@ -27,12 +27,21 @@ public class PushdownAutomaton extends NondeterministicFiniteAutomaton {
 
     /**
      * Returns a set with the start state and an empty stack,
-     * and all state/stack combinations that can be reached with an epsilon transition from the start state.
+     * and all state/stack combinations that can be reached with epsilon transitions from the start state.
      */
-    private Set<State> getStartStates() {
+    private Set<State> evaluateStartStates() {
         Set<State> startStates = new HashSet<>();
         startStates.add(new StateStackPair(startState, stack));
-        startStates.addAll(getAllTargetStates(startStates, EPSILON));
+
+        int numberOfStates = 0;
+        int newNumberOfStates = 1;
+
+        while (numberOfStates != newNumberOfStates){
+            startStates.addAll(getAllTargetStates(startStates, EPSILON));
+            numberOfStates = newNumberOfStates;
+            newNumberOfStates = startStates.size();
+        }
+
         return startStates;
     }
 

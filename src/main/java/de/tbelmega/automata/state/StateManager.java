@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by Thiemo on 03.02.2016.
  *
- * A state manager stores the states for an automaton.
+ * A state manager stores the states for an automatonRepresentation.
  * The state manager ensures that there is only one state with a given name.
  */
 public class StateManager {
