@@ -35,14 +35,7 @@ public class NondeterministicFiniteAutomaton extends Automaton {
     private Set<State> evaluateStartStates() {
         Set<State> startStates = new HashSet<>();
         startStates.add(startState);
-        int numberOfStates = 0;
-        int newNumberOfStates = 1;
-
-        while (numberOfStates != newNumberOfStates){
-            startStates.addAll(getAllTargetStates(startStates, EPSILON));
-            numberOfStates = newNumberOfStates;
-            newNumberOfStates = startStates.size();
-        }
+        startStates.addAll(getAllTargetStates(startStates, EPSILON));
         return startStates;
     }
 
@@ -68,7 +61,21 @@ public class NondeterministicFiniteAutomaton extends Automaton {
         for (State s: currentStates){
             nextStates.addAll(s.doTransition(inputCharacter));
         }
+
+        addAllEpsilonTransitionTargetStates(nextStates);
+
         return nextStates;
+    }
+
+    private void addAllEpsilonTransitionTargetStates(Set<State> nextStates) {
+        int previousNumberOfStates = 0;
+        int numberOfStates = nextStates.size();
+
+        while (numberOfStates != previousNumberOfStates){
+            nextStates.addAll(getAllTargetStates(nextStates, EPSILON));
+            previousNumberOfStates = numberOfStates;
+            numberOfStates = nextStates.size();
+        }
     }
 
     /**

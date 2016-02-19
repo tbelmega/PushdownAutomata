@@ -61,8 +61,16 @@ public class StateStackPair implements State {
     @Override
     public boolean equals(Object anotherObject){
         if (anotherObject instanceof  StateStackPair){
-            return this.state.getStateId().equals(((StateStackPair) anotherObject).getStateId());
+            return equalState((StateStackPair) anotherObject) && equalStack((StateStackPair) anotherObject);
         } else return false;
+    }
+
+    private boolean equalStack(StateStackPair anotherObject) {
+        return this.stack.toString().equals(anotherObject.stack.toString());
+    }
+
+    private boolean equalState(StateStackPair anotherObject) {
+        return this.state.getStateId().equals(anotherObject.getStateId());
     }
 
     @Override

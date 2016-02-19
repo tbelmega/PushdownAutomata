@@ -32,16 +32,7 @@ public class PushdownAutomaton extends NondeterministicFiniteAutomaton {
     private Set<State> evaluateStartStates() {
         Set<State> startStates = new HashSet<>();
         startStates.add(new StateStackPair(startState, stack));
-
-        int numberOfStates = 0;
-        int newNumberOfStates = 1;
-
-        while (numberOfStates != newNumberOfStates){
-            startStates.addAll(getAllTargetStates(startStates, EPSILON));
-            numberOfStates = newNumberOfStates;
-            newNumberOfStates = startStates.size();
-        }
-
+        startStates.addAll(getAllTargetStates(startStates, EPSILON));
         return startStates;
     }
 

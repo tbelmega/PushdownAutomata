@@ -87,6 +87,18 @@ public class PushdownAutomatonTest {
     }
 
     @Test
+    public void testThatM5AcceptsWord1() throws Exception {
+        //arrange
+        String inputWord = "aaaa";
+
+        //act
+        boolean accepted = m5.emulate(inputWord);
+
+        //assert
+        assertTrue(accepted);
+    }
+
+    @Test
     public void testThatM5AcceptsWord() throws Exception {
         //arrange
         String inputWord = "aaabbbbaaa";
